@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCTVKU</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #330030;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      color: cyan;
+      font-weight: bold;
+      font-size: 28px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .video-box {
+      background-color: #4e0041;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .video-title {
+      color: #ffcb6b;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px 10px;
+      font-size: 14px;
+    }
+
+    #sidebarToggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ffcb6b;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #1a001a;
+      transition: left 0.3s;
+      padding: 10px;
+    }
+
+    #sidebar.show {
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <button id="sidebarToggle">☰</button>
+  <div id="sidebar">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGvMFG9RQPjk1NieoyLLHyTFBdDQZOPvMHQaE2axpbG2JxNN-3PaSPU2tjEbAZJxI0C1eFdQWWtYDzdosB3zNAoadX94Ee4OvCA_VwfIjmU34UlScgpmNBX1sjmJLGgM2O0RLX_aQ_8Innv1pv4ZKMad_9jgskFnqMaqQjdp_goyEn5zSODwZemRgxJw/s1134/memoriesof2018.png" style="width:160px;height:160px;" />
+        </div>
+        <div class="flip-card-back">
+          <p style="text-align: center;"><u><strong><div class="animated_rainbow_2">Ykzir Polyglot</div></strong></u></p>
+          <p><div class="animated_rainbow_3">Philosopher, Entrepreneur, Musician</div></p>
+          <p style="text-align: center;"><strong><div class="animated_rainbow_1">⌨⌨⌨⌨⌨⌨⌨</div></strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header>CCTVKU - Powered by YKZIR POLYGLOT</header>
+
+  <div class="container">
+    <div class="video-box">
+      <div class="video-title">ꦓꦝꦁꦁ꧇꧑꧇</div>
+      <video controls autoplay muted width="100%">
+        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/292570058740218968707392.m3u8" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="video-box">
+      <div class="video-title">ꦓꦝꦁꦁ꧇꧒꧇</div>
+      <video controls autoplay muted width="100%">
+        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/772701504430563728087236.m3u8" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="video-box">
+      <div class="video-title">ꦑꦕꦸꦏ꧀꧇꧑꧇</div>
+      <video controls autoplay muted width="100%">
+        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/215178419587511478247119.m3u8" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="video-box">
+      <div class="video-title">ꦑꦕꦸꦏ꧀꧇꧒꧇</div>
+      <video controls autoplay muted width="100%">
+        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/336686011348989661063244.m3u8" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <footer>
+    Malang Selatan CCTV - diberdayakan oleh Pemerintah Kota Malang, 2019 - 2025
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('show');
+    });
+  </script>
+
+  <!-- Include animated styles -->
+  <!-- rainbow styles pasted here -->
+  <style>
+    /* (all animated_rainbow_1, _2, _3 CSS from your input goes here) */
+  </style>
+</body>
+</html>
