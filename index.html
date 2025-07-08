@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CCTVKU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     body {
       margin: 0;
       background-color: #330030;
       font-family: Arial, Helvetica, sans-serif;
       color: white;
+      overflow-x: hidden;
     }
 
     header {
       text-align: center;
-      padding: 20px 0;
+      padding: 20px 0 5px 0;
       color: cyan;
       font-weight: bold;
       font-size: 28px;
@@ -31,12 +33,24 @@
       background-color: #4e0041;
       padding: 10px;
       border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .video-title {
       color: #ffcb6b;
       font-weight: bold;
       margin-bottom: 8px;
+      text-align: center;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: black;
+      border-radius: 5px;
     }
 
     footer {
@@ -47,82 +61,102 @@
     }
 
     #sidebarToggle {
-      position: absolute;
+      position: fixed;
       top: 10px;
       left: 10px;
       background: #ffcb6b;
       border: none;
       padding: 10px;
       cursor: pointer;
-      z-index: 9999;
+      z-index: 10001;
     }
 
     #sidebar {
       position: fixed;
       top: 0;
-      left: -200px;
-      width: 200px;
+      left: -250px;
+      width: 250px;
       height: 100%;
       background-color: #1a001a;
       transition: left 0.3s;
-      padding: 10px;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 10000;
     }
 
     #sidebar.show {
       left: 0;
     }
+
+    .biodata {
+      text-align: center;
+    }
+
+    .biodata img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .biodata h3, .biodata p {
+      margin: 10px 0;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 20000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
+
   <button id="sidebarToggle">☰</button>
+
   <div id="sidebar">
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGvMFG9RQPjk1NieoyLLHyTFBdDQZOPvMHQaE2axpbG2JxNN-3PaSPU2tjEbAZJxI0C1eFdQWWtYDzdosB3zNAoadX94Ee4OvCA_VwfIjmU34UlScgpmNBX1sjmJLGgM2O0RLX_aQ_8Innv1pv4ZKMad_9jgskFnqMaqQjdp_goyEn5zSODwZemRgxJw/s1134/memoriesof2018.png" style="width:160px;height:160px;" />
-        </div>
-        <div class="flip-card-back">
-          <p style="text-align: center;"><u><strong><div class="animated_rainbow_2">Ykzir Polyglot</div></strong></u></p>
-          <p><div class="animated_rainbow_3">Philosopher, Entrepreneur, Musician</div></p>
-          <p style="text-align: center;"><strong><div class="animated_rainbow_1">⌨⌨⌨⌨⌨⌨⌨</div></strong></p>
-        </div>
-      </div>
+    <div class="biodata">
+      <h3>...</h3>
+      <img id="profilePic" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGvMFG9RQPjk1NieoyLLHyTFBdDQZOPvMHQaE2axpbG2JxNN-3PaSPU2tjEbAZJxI0C1eFdQWWtYDzdosB3zNAoadX94Ee4OvCA_VwfIjmU34UlScgpmNBX1sjmJLGgM2O0RLX_aQ_8Innv1pv4ZKMad_9jgskFnqMaqQjdp_goyEn5zSODwZemRgxJw/s1134/memoriesof2018.png" alt="Profile Picture">
+      <h3>Ykzir Polyglot</h3>
+      <p>Philosopher, Entrepreneur, Musician</p>
     </div>
   </div>
 
+  <div class="popup" id="imagePopup">
+    <img src="" id="popupImage" alt="Popup Image">
+  </div>
+  <header>📸</header>
   <header>CCTVKU - Powered by YKZIR POLYGLOT</header>
 
   <div class="container">
     <div class="video-box">
       <div class="video-title">ꦓꦝꦁꦁ꧇꧑꧇</div>
-      <video controls autoplay muted width="100%">
-        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/292570058740218968707392.m3u8" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
+      <video id="video1" controls autoplay muted></video>
     </div>
-
     <div class="video-box">
       <div class="video-title">ꦓꦝꦁꦁ꧇꧒꧇</div>
-      <video controls autoplay muted width="100%">
-        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/772701504430563728087236.m3u8" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
+      <video id="video2" controls autoplay muted></video>
     </div>
-
     <div class="video-box">
       <div class="video-title">ꦑꦕꦸꦏ꧀꧇꧑꧇</div>
-      <video controls autoplay muted width="100%">
-        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/215178419587511478247119.m3u8" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
+      <video id="video3" controls autoplay muted></video>
     </div>
-
     <div class="video-box">
       <div class="video-title">ꦑꦕꦸꦏ꧀꧇꧒꧇</div>
-      <video controls autoplay muted width="100%">
-        <source src="http://stream.cctv.malangkota.go.id/WebRTCApp/streams/336686011348989661063244.m3u8" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
+      <video id="video4" controls autoplay muted></video>
     </div>
   </div>
 
@@ -133,16 +167,41 @@
   <script>
     const toggleBtn = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
-
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('show');
     });
-  </script>
 
-  <!-- Include animated styles -->
-  <!-- rainbow styles pasted here -->
-  <style>
-    /* (all animated_rainbow_1, _2, _3 CSS from your input goes here) */
-  </style>
+    const streams = [
+      { id: 'video1', url: 'http://stream.cctv.malangkota.go.id/WebRTCApp/streams/292570058740218968707392.m3u8' },
+      { id: 'video2', url: 'http://stream.cctv.malangkota.go.id/WebRTCApp/streams/772701504430563728087236.m3u8' },
+      { id: 'video3', url: 'http://stream.cctv.malangkota.go.id/WebRTCApp/streams/215178419587511478247119.m3u8' },
+      { id: 'video4', url: 'http://stream.cctv.malangkota.go.id/WebRTCApp/streams/336686011348989661063244.m3u8' }
+    ];
+
+    streams.forEach(({ id, url }) => {
+      const video = document.getElementById(id);
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+      }
+    });
+
+    // Popup image logic
+    const profilePic = document.getElementById('profilePic');
+    const imagePopup = document.getElementById('imagePopup');
+    const popupImage = document.getElementById('popupImage');
+
+    profilePic.addEventListener('click', () => {
+      popupImage.src = profilePic.src;
+      imagePopup.style.display = 'flex';
+    });
+
+    imagePopup.addEventListener('click', () => {
+      imagePopup.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
